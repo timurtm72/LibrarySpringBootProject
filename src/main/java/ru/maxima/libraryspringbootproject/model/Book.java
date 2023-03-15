@@ -1,26 +1,53 @@
 package ru.maxima.libraryspringbootproject.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import javax.validation.constraints.*;
 
+import java.time.LocalDateTime;
+@Entity
+@Table(name = "book")
 public class Book {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="person_id")
+    private Person person;
+    @NotEmpty(message = "Название книги не может быть пустым")
+    @Size(min = 2,max = 50,message = "Название книги не может быть не менее 2 символов и не более 50 символов")
+    @Column(name = "name")
     private String name;
+    @Min(value = 1900,message = "Год издания книги должен быть больше 1900 года")
+    @Column(name = "year_of_production")
     private Integer yearOfProduction;
+    @NotEmpty(message = "Имя автора не может быть пустым")
+    @Size(min = 2,max = 50,message = "Имя автора не может быть не менее 2 символов и не более 50 символов")
+    @Column(name = "author")
     private String author;
+    @NotEmpty(message = "Поле описание не может быть пустым")
+    @Size(min = 2,message = "Поле описание не может быть не менее 2 символов")
+    @Column(name = "annotation")
     private String annotation;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    @Column(name = "removed_at")
     private LocalDateTime removedAt;
+    @Column(name = "created_person")
     private String createdPerson;
+    @Column(name = "updated_person")
     private String updatedPerson;
+    @Column(name = "removed_person")
     private String removedPerson;
 
     public Book() {
     }
 
-    public Book(Long id, String name, Integer yearOfProduction, String author, String annotation, LocalDateTime createdAt,
-                LocalDateTime updatedAt, LocalDateTime removedAt, String createdPerson, String updatedPerson, String removedPerson) {
+    public Book(Long id, Person person, String name, Integer yearOfProduction, String author, String annotation, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime removedAt, String createdPerson, String updatedPerson, String removedPerson) {
         this.id = id;
+        this.person = person;
         this.name = name;
         this.yearOfProduction = yearOfProduction;
         this.author = author;
@@ -31,6 +58,14 @@ public class Book {
         this.createdPerson = createdPerson;
         this.updatedPerson = updatedPerson;
         this.removedPerson = removedPerson;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Long getId() {

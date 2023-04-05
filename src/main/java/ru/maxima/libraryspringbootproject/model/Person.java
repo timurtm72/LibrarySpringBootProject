@@ -1,12 +1,11 @@
 package ru.maxima.libraryspringbootproject.model;
 
-import jakarta.persistence.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,10 +18,11 @@ public class Person {
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Book> personBooks;
     @NotEmpty(message = "Имя не может быть пустым")
-    @Size(min = 2,max = 50,message = "Фамилия, имя и отчество должны быть не менее 5 символов и не более 50 символов")
+    @Size(min = 4,max = 50,message = "Фамилия, имя и отчество должны быть не менее 5 символов и не более 50 символов")
     @Column(name = "name")
     private String name;
-    @Min(value = 1930,message = "Год рождения должен быть больше 1930 года")
+
+    @Min(value = 5,message = "Возраст не может быть меньше 5 лет")
     @Column(name = "age")
     private Integer age;
     @NotEmpty(message = "Поле электронной почты не может быть пустым")
@@ -31,12 +31,15 @@ public class Person {
     @NotEmpty(message = "Поле номера телефона не может быть пустым")
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    //@Size(min = 2,max = 50,message = "Пароль должен быть более 2 символов")
     @NotEmpty(message = "Поле пароля не может быть пустым")
-    @Size(min = 5,max = 50,message = "Пароль должен быть не менее 5 символов и не более 50 символов")
     @Column(name = "password")
     private String password;
     @Column(name = "role")
     private String role;
+    @Column(name = "removed")
+    private boolean removed;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "updated_at")
@@ -53,7 +56,7 @@ public class Person {
     public Person() {
     }
 
-    public Person(Long id, List<Book> personBooks, String name, Integer age, String email, String phoneNumber, String password, String role, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime removedAt, String createdPerson, String updatedPerson, String removedPerson) {
+    public Person(Long id, List<Book> personBooks, String name, Integer age, String email, String phoneNumber, String password, String role, boolean removed, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime removedAt, String createdPerson, String updatedPerson, String removedPerson) {
         this.id = id;
         this.personBooks = personBooks;
         this.name = name;
@@ -62,6 +65,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.role = role;
+        this.removed = removed;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.removedAt = removedAt;
@@ -70,7 +74,7 @@ public class Person {
         this.removedPerson = removedPerson;
     }
 
-//    public void addBook(Book book){
+    //    public void addBook(Book book){
 //        if(personBooks != null) {
 //            personBooks.add(book);
 //        }
@@ -80,14 +84,6 @@ public class Person {
 //            personBooks.remove(book);
 //        }
 //    }
-
-    public List<Book> getBooks() {
-        return personBooks;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.personBooks = books;
-    }
 
     public Long getId() {
         return id;
@@ -145,6 +141,22 @@ public class Person {
         this.role = role;
     }
 
+    public List<Book> getPersonBooks() {
+        return personBooks;
+    }
+
+    public void setPersonBooks(List<Book> personBooks) {
+        this.personBooks = personBooks;
+    }
+
+    public boolean isRemoved() {
+        return removed;
+    }
+
+    public void setRemoved(boolean removed) {
+        this.removed = removed;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -191,5 +203,25 @@ public class Person {
 
     public void setRemovedPerson(String removedPerson) {
         this.removedPerson = removedPerson;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", personBooks=" + personBooks +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", removedAt=" + removedAt +
+                ", createdPerson='" + createdPerson + '\'' +
+                ", updatedPerson='" + updatedPerson + '\'' +
+                ", removedPerson='" + removedPerson + '\'' +
+                '}';
     }
 }

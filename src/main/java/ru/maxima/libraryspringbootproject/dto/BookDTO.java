@@ -1,14 +1,16 @@
 package ru.maxima.libraryspringbootproject.dto;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+
+
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 @Component
 public class BookDTO {
+    private Long Id;
     @NotEmpty(message = "Название книги не может быть пустым")
     @Size(min = 2,max = 50,message = "Название книги не может быть не менее 2 символов и не более 50 символов")
     @Column(name = "name")
@@ -21,9 +23,17 @@ public class BookDTO {
     @Column(name = "author")
     private String author;
     @NotEmpty(message = "Поле описание не может быть пустым")
-    @Size(min = 2,message = "Поле описание не может быть не менее 2 символов")
+    @Size(min = 2,message = "Поле описание не может быть менее 2 символов")
     @Column(name = "annotation")
     private String annotation;
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
+    }
 
     public String getName() {
         return name;

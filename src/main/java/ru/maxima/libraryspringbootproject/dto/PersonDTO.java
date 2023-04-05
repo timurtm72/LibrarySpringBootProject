@@ -1,31 +1,37 @@
 package ru.maxima.libraryspringbootproject.dto;
 
-import jakarta.persistence.Column;
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+
+import org.springframework.stereotype.Component;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import ru.maxima.libraryspringbootproject.model.Book;
+
+import java.util.List;
 
 @Component
 public class PersonDTO {
+    private Long id;
     @NotEmpty(message = "Имя не может быть пустым")
-    @Size(min = 2,max = 50,message = "Фамилия, имя и отчество должны быть не менее 5 символов и не более 50 символов")
-    @Column(name = "name")
+    @Size(min = 4,max = 50,message = "Фамилия, имя и отчество должны быть не менее 5 символов и не более 50 символов")
     private String name;
-    @Min(value = 1930,message = "Год рождения должен быть больше 1930 года")
-    @Column(name = "age")
+
+    @Min(value = 5,message = "Возраст не может быть меньше 5 лет")
     private Integer age;
     @NotEmpty(message = "Поле электронной почты не может быть пустым")
-    @Column(name = "email")
     private String email;
     @NotEmpty(message = "Поле номера телефона не может быть пустым")
-    @Column(name = "phone_number")
     private String phoneNumber;
-    @NotEmpty(message = "Поле пароля не может быть пустым")
-    @Size(min = 5,max = 50,message = "Пароль должен быть не менее 5 символов и не более 50 символов")
-    @Column(name = "password")
-    private String password;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -59,11 +65,4 @@ public class PersonDTO {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }

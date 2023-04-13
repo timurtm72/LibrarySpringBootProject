@@ -1,5 +1,10 @@
-# LibrarySpringBootProject
+# LibrarySpringBootProject 
 
+* Spring Security
+* Spring Rest
+* Spring MVC
+* Thymeleaf
+* JWT token
 * server.port=8081
 
 * В файле SecurityConfig необходимо для WEB проекта активировать бин, он помечен.
